@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>测试filter</title>
+	<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+			<input v-bind:id="inputId | idfilter" type="" name="" value="filter">
+	</div>
+	<script type="text/javascript">
+		new Vue({
+			el:"#app",
+			data:{
+				inputId:'inputid'
+			},
+			filters:{
+				idfilter: function(value){
+					if (!value) return ''
+					value = value.toString()
+					return value.chatAt().toUpperCate() +value.slice(1)
+				}
+			}
+		})
+	</script>
+</body>
+</html>
