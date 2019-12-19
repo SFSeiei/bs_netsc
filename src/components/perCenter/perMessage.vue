@@ -47,7 +47,7 @@
 				<div class="col-md-3">
 					<h6 class="text-left mt-2 p-2">推荐蔬菜：</h6>
 					<div class="row" id="hasBuy">
-						<div class="col-md-4 p-0" v-for="(product,index) in threeProducts" :key="product.index">
+						<div class="col-md-4 p-0" v-for="(product,index) in threeProducts" :key="product.index" @click="buyNow(product)">
 							<img alt="Bootstrap Image Preview" :src="product.pPhoto" class="rounded-circle" style="{width: 70px;height:70px;width: 70px;}" />
 							<span>{{product.pName}}</span>
 						</div>
@@ -114,29 +114,29 @@
 			</div> -->
 			<!-- end my privilege -->
 			<!-- start my mission -->
-			<div class="row pt-1 pb-1 border border-left-0 border-right-0 mt-3 mb-2">
-				<div class="col-md-12">
-					<h6 class="text-left mt-2 p-2">我的任务：</h6>
-					<div class="row">
-						<div class="col-md-3">
-							<img alt="Bootstrap Image Preview" :src="mission1" class=""/>
-							<h6 class="text-muted mt-2 p-2">每日签到</h6>
-						</div>
-						<div class="col-md-3">
-							<img alt="Bootstrap Image Preview" :src="mission2" class=""/>
-							<h6 class="text-muted mt-2 p-2">完善资料</h6>
-						</div>
-						<div class="col-md-3">
-							<img alt="Bootstrap Image Preview" :src="mission3" class=""/>
-							<h6 class="text-muted mt-2 p-2">首笔消费</h6>
-						</div>
-						<div class="col-md-3">
-							<img alt="Bootstrap Image Preview" :src="mission4" class=""/>
-							<h6 class="text-muted mt-2 p-2">每日消费</h6>
-						</div>
-					</div>
-				</div>
-			</div>
+			<!--<div class="row pt-1 pb-1 border border-left-0 border-right-0 mt-3 mb-2">-->
+				<!--<div class="col-md-12">-->
+					<!--<h6 class="text-left mt-2 p-2">我的任务：</h6>-->
+					<!--<div class="row">-->
+						<!--<div class="col-md-3">-->
+							<!--<img alt="Bootstrap Image Preview" :src="mission1" class=""/>-->
+							<!--<h6 class="text-muted mt-2 p-2">每日签到</h6>-->
+						<!--</div>-->
+						<!--<div class="col-md-3">-->
+							<!--<img alt="Bootstrap Image Preview" :src="mission2" class=""/>-->
+							<!--<h6 class="text-muted mt-2 p-2">完善资料</h6>-->
+						<!--</div>-->
+						<!--<div class="col-md-3">-->
+							<!--<img alt="Bootstrap Image Preview" :src="mission3" class=""/>-->
+							<!--<h6 class="text-muted mt-2 p-2">首笔消费</h6>-->
+						<!--</div>-->
+						<!--<div class="col-md-3">-->
+							<!--<img alt="Bootstrap Image Preview" :src="mission4" class=""/>-->
+							<!--<h6 class="text-muted mt-2 p-2">每日消费</h6>-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
 			<!-- end my mission -->
 			<!-- start my order -->
 			<div class="row pt-1 pb-1 mt-3 mb-2">
@@ -179,14 +179,14 @@
 						<table class="table table-bordered bg-light" id="mainBodyTwoTable">
 							<tbody>
 								<tr>
-									<td v-for="(product,index) in sixProducts" :key="product.index">
+									<td v-for="(product,index) in sixProducts" :key="product.index" @click="buyNow(product)">
 										<div class="">
 											<img :src="product.pPhoto" style="{width: 88px;height: 72px;width: 88px;}">
 										</div>
 										<div class="">
 											<strong class="small">[{{product.bCName}}]</strong><br>
 											<span class="text-secondary">{{product.pName}}</span><br>
-											<span class="text-left small text-danger">平台价：{{product.pMemPrice}}/斤</span>
+											<span class="text-left small text-danger">平台价：{{product.pMemPrice}}元/斤</span>
 										</div>
 									</td>
 								</tr>
@@ -295,7 +295,7 @@
 												<tr v-for="(pro,index) in orderinfos" v-bind:key="pro.pId">
 													<td>{{index+1}}</td>
 													<td>{{pro.pName}}</td>
-													<td class="">{{pro.pNumber}}</td>
+													<td class="">{{pro.pNumber}}斤</td>
 													<td class="text-danger">{{pro.pPrice}}元/斤</td>
 												</tr>
 											</tbody>
@@ -511,9 +511,6 @@
 				this.username=getCookie('username');
 				this.userId=getCookie('id');
 				this.roleId=getCookie('roleId');
-				if(this.roleId!==1 && this.roleId!==2){
-					this.isSeller=true
-				}
 				this.$http.get('/netsc/userinfo/'+this.userId).then((res)=>{
 					console.log(res.data);
 					this.user = res.data.result;
@@ -560,6 +557,9 @@
 						console.log(this.myorders)
 					}
 				})
+                if(this.roleId !== "1" && this.roleId !== "2"){
+                    this.isSeller=true
+                }
 			}else{
 				this.user = {"userImage":this.myphoto,"utel":0}
 			}
@@ -633,51 +633,60 @@
 					}
 				})
 			},
+            buyNow(product){
+                console.log(product)
+                this.$router.push({
+                    path: '/allitems/item',
+                    query: {
+                        item: product
+                    }
+                })
+            },
 			payPass(){
 				this.$refs.payPasswordButton.click()
 			},
-			checkPayPassword(){
-				this.$axios.get('/netsc/wallet/uid='+this.userId).then((res)=>{
-						// console.log(res.data)
-						if(this.payPassword === res.data.result.payPassword){
-							let data = {"money":this.lastMoney};
-							console.log(data);
-							var myDate = this.getNowFormatDate();
-							this.$axios.put('/netsc/wallet/'+this.userId,data).then((res)=>{
-								console.log(myDate);
-								let sencondData = {"payTime":myDate,"payWay":"在线付款","ostate":"已付款"};
-								this.$axios.put('/netsc/order/'+this.orderId,sencondData).then((res)=>{
-									console.log(res.data);
-									alert("付款成功");
-									window.location.reload()
-								})
-							})
-						}
+            checkPayPassword() {
+                this.$axios.get('/netsc/wallet/uid=' + this.userId).then((res) => {
+                    // console.log(res.data)
+                    if (this.payPassword === res.data.result.payPassword) {
+                        let data = {"money": this.lastMoney};
+                        console.log(data);
+                        var myDate = this.getNowFormatDate();
+                        this.$axios.put('/netsc/wallet/' + this.userId, data).then((res) => {
+                            console.log(myDate);
+                            let sencondData = {"payTime": myDate, "payWay": "在线付款", "ostate": "已付款"};
+                            this.$axios.put('/netsc/order/' + this.orderId, sencondData).then((res) => {
+                                console.log(res.data);
+                                alert("付款成功");
+                                window.location.reload()
+                            })
+                        })
+                    }
 
-					})
-			},
-				getNowFormatDate() {//获取当前时间
-					var date = new Date();
-					var seperator1 = "-";
-					var seperator2 = ":";
-					var month = date.getMonth() + 1<10? "0"+(date.getMonth() + 1):date.getMonth() + 1;
-					var strDate = date.getDate()<10? "0" + date.getDate():date.getDate();
-					var currentdate = date.getFullYear() + seperator1  + month  + seperator1  + strDate
-					+ " "  + date.getHours()  + seperator2  + date.getMinutes()
-					+ seperator2 + date.getSeconds();
-					return currentdate;
-				}
-		},
-			watch: { //深度 watcher
-				payPassword: {
-					handler: function (val, oldVal) { 
-						if (this.payPassword.length ===6) {
-							this.$refs.payPasswordButtonSubmit.click()
-						}
-					},
-					deep: true
-				}
-			}
+                })
+            },
+            getNowFormatDate() {//获取当前时间
+                var date = new Date();
+                var seperator1 = "-";
+                var seperator2 = ":";
+                var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+                var strDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+                    + " " + date.getHours() + seperator2 + date.getMinutes()
+                    + seperator2 + date.getSeconds();
+                return currentdate;
+            }
+        },
+        watch: { //深度 watcher
+            payPassword: {
+                handler: function (val, oldVal) {
+                    if (this.payPassword.length === 6) {
+                        this.$refs.payPasswordButtonSubmit.click()
+                    }
+                },
+                deep: true
+            }
+        }
 	}
 </script>
 	

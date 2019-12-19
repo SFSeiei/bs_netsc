@@ -33,10 +33,10 @@
 									<img alt="Bootstrap Image Preview" :src="pro.pPhoto" class="img-thumbnail ml-3 mt-2" style="width: 100px;height: 100px;" />
 									<h5 class="mt-1 mb-1">{{pro.pName}}</h5>
 									<p class="mt-1 mb-1">
-										<del>原价：{{pro.pPrice}}</del>
+										<del>原价：{{pro.pPrice}}元/斤</del>
 									</p>
 									<p class="mt-1 mb-1 text-danger">
-										平台价：{{pro.pMemPrice}}
+										平台价：{{pro.pMemPrice}}元/斤
 									</p>
 									<p class="mt-1 mb-1 text-primary">
 										店铺：{{pro.sName}}
@@ -48,6 +48,27 @@
 							</div>
 						</div>
 					</div>
+                    <div class="row mx-auto">
+                        <ul class="pagination pagination-sm mt-2 float-right mx-auto text-primary">
+                            <li class="page-item">
+                                <a class="page-link" @click="switchToPage(1)"><i class="fa fa-fast-backward">首页</i></a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" @click="switchToPage(pageNow-1)"><i
+                                    class="fa fa-backward"><</i></a>
+                            </li>
+                            <li class="page-item" v-for="n in pages" :class="{active:n==pageNow}">
+                                <a @click="switchToPage(n)" class="page-link">{{n}}</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" @click="switchToPage(pageNow+1)"><i class="fa fa-forward">></i></a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" @click="switchToPage(pages)"><i
+                                    class="fa fa-fast-forward">尾页</i></a>
+                            </li>
+                        </ul>
+                    </div>
 				</div>
 			</div>
 		</div>
@@ -78,11 +99,14 @@
 				email:null,
 				uTel:0,
 				uIDcard:'',
-				address:null
-			}
-		},
-		components: {
-		},
+				address:null,
+                pageNow: 1,
+                pageSize: 12,
+                totalPages: 0,
+                pages: 0
+            }
+        },
+        components: {},
 		mounted(){
 			/*页面挂载获取username,id*/
 			this.username=getCookie('username');
@@ -94,9 +118,12 @@
 			var pName = this.$route.query.searchMessage;
 			console.log(pName);
 			if(pName == null){
-				this.$axios.get('/netsc/products').then((res)=>{
+				this.$axios.get('/netsc/productsPage?page='+this.pageNow+'&pageSize='+this.pageSize).then((res)=>{
 				console.log(res.data);
-				this.allPros = res.data.result;
+				this.allPros = res.data.result.rows;
+				this.totalPages = res.data.result.total;
+				this.pages = res.data.result.pages;
+				this.pageNow = res.data.result.current;
 			})
 			}else{
 				this.$axios.get('/netsc/products/pName='+pName).then((res)=>{
@@ -114,16 +141,35 @@
 						item: product
 					}
 				})
-			}
-		},
-		computed: {
-			classObject(){
-				return{
-					active: this.isNotActive
-					// console.log(this.isNotActive)
-				}
-			}
-		}
+			},
+            switchToPage(pageNo) {
+                // console.log(this.pageNow)
+                if (pageNo <= 0) {
+                    pageNo = 1;
+                } else if (pageNo > this.pages) {
+                    pageNo = this.pages;
+                }
+                this.getProductsByPage(pageNo);
+            },
+            getProductsByPage(pageNow) {
+                // console.log("调用分页！");
+                this.$axios.get('/netsc/productsPage?page=' + pageNow + '&pageSize=' + this.pageSize).then((res) => {
+                    // console.log(res.data);
+                    this.allPros = res.data.result.rows;
+                    this.totalPages = res.data.result.total;
+                    this.pages = res.data.result.pages;
+                    this.pageNow = res.data.result.current;
+                })
+            }
+        },
+        computed: {
+            classObject() {
+                return {
+                    active: this.isNotActive
+                    // console.log(this.isNotActive)
+                }
+            }
+        }
 	}
 </script>
 	

@@ -25,7 +25,7 @@
                                     <div class="list-group-item" v-for="(product,index) in threeProducts1" :key="product.index"  @click="buyNow(product)">
                                         <img :src="product.pPhoto" style="{width: 77px;height:65px;width: 85px;}"><br>
                                         <strong class="text-left small">[{{product.bCName}}]{{product.pName}}</strong><br>
-                                        <span class="text-left small text-danger">平台价：{{product.pMemPrice}}/斤</span><br>
+                                        <span class="text-left small text-danger">平台价：{{product.pMemPrice}}元/斤</span><br>
                                     </div>
                                 </div>
                                 <h6 class=" p-2 pt-3 pb-3 strong border m-0">热卖推荐</h6>
@@ -33,12 +33,12 @@
                                     <div class="list-group-item" v-for="(product,index) in threeProducts2" :key="product.index"  @click="buyNow(product)">
                                         <img :src="product.pPhoto" style="{width: 77px;height:65px;width: 85px;}"><br>
                                         <strong class="text-left small">[{{product.bCName}}]{{product.pName}}</strong><br>
-                                        <span class="text-left small text-danger">平台价：{{product.pMemPrice}}/斤</span><br>
+                                        <span class="text-left small text-danger">平台价：{{product.pMemPrice}}元/斤</span><br>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    <router-view></router-view>
+                    <router-view :pProduct="pProduct"></router-view>
                 </div>
             </div>
         </div>
@@ -58,7 +58,8 @@ export default {
             cabbage3url:require('@/pages/index/assets/img/vegetables/cabbage/cabbage3.jpg'),
             allProducts:null,
             threeProducts1:null,
-            threeProducts2:null
+            threeProducts2:null,
+            pProduct:null
         } 
     },
     mounted(){
@@ -81,13 +82,17 @@ export default {
             return shuffled.slice(min);
         },
         buyNow(product){
-            console.log(product)
-            this.$router.push({
-                path: '/allitems/item',
-                query: {
-                    item: product
-                }
-            })
+            // console.log(product);
+            if (this.$route.path === "/allitems/item") {
+                this.pProduct = product
+            }else {
+                this.$router.push({
+                    path: '/allitems/item',
+                    query: {
+                        item: product
+                    }
+                })
+            }
         }
     }
 }

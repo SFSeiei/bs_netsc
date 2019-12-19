@@ -15,17 +15,17 @@
                         </div>
                         <div class="row mt-2 mb-2">
                             <div class="col-md-4" id="currentItem">
-                                <img alt="Bootstrap Image Preview" :src="this.preItem.pPhoto" style="width: 260px;height: 173px;" />
+                                <img alt="Bootstrap Image Preview" :src="preItem.pPhoto" style="width: 260px;height: 173px;" />
                             </div>
                             <div class="col-md-8">
 
                                 <div class="card">
                                     <h5 class="card-header">
-                                        {{this.preItem.pName}}
+                                        {{preItem.pName}}
                                     </h5>
                                     <div class="card-body">
                                         <p class="card-text text-danger ">
-                                            价钱：{{this.preItem.pMemPrice}}元/斤
+                                            价钱：{{preItem.pMemPrice}}元/斤
                                         </p>
                                         <!-- <del>原价：{{this.preItem.pPrice}}元/斤</del> -->
                                     </div>
@@ -61,9 +61,7 @@
                             <div class="col-md-12" id="itemPhoto">
                                 <h5 class="text-left mt-2 p-2 font-weight-bold border">商品图片：</h5>
                                 <div class=" mb-4 p-3">
-                                    <img alt="Bootstrap Image Preview" :src="cabbage1url" />
-                                    <img alt="Bootstrap Image Preview" :src="cabbage2url" />
-                                    <img alt="Bootstrap Image Preview" :src="cabbage3url" />
+                                    <img class="m-1" alt="Bootstrap Image Preview" v-for="(preItemPhoto,index) in preItemPhotos" :key="preItemPhoto.index" :src="preItemPhoto.pPurl" style="width: 245px;height: 245px"/>
                                 </div>
                             </div>
                         </div>
@@ -90,6 +88,7 @@
                                 </div> -->
                             <!-- </div>
                         </div> -->
+                        <!--<img alt="Bootstrap Image Preview" :src="pProduct.pPhoto" style="width: 260px;height: 173px;" />-->
                     </div>
                 </div>
             </div>
@@ -107,14 +106,16 @@
                 username:null,
                 userId:null,
                 roleId:1,
-                preItem:"",
+                preItem:null,
                 shopinfo:"",
                 cabbage4url:require('@/pages/index/assets/img/vegetables/cabbage/cabbage4.jpg'),
                 cabbage1url:require('@/pages/index/assets/img/vegetables/cabbage/cabbage1.jpg'),
                 cabbage2url:require('@/pages/index/assets/img/vegetables/cabbage/cabbage2.jpg'),
-                cabbage3url:require('@/pages/index/assets/img/vegetables/cabbage/cabbage3.jpg')
+                cabbage3url:require('@/pages/index/assets/img/vegetables/cabbage/cabbage3.jpg'),
+                preItemPhotos:[]
             } 
         },
+        props: ['pProduct'],
         mounted(){
             this.username=getCookie('username');
             this.userId=getCookie('id');
@@ -128,14 +129,18 @@
                 console.log(res.data);
                 this.shopinfo = res.data.result.sname;
             })
+            this.$axios.get('/netsc/productPhotos/'+this.preItem.pId).then((res)=>{
+                console.log(res.data);
+                this.preItemPhotos = res.data.result;
+            })
         },
         methods:{
             addTrolley(){
-                this.$axios.get('/netsc/trolley/uId='+this.userId+"?pName="+this.preItem.pName).then((res)=>{
+                this.$axios.get('/netsc/trolleyOne/uId='+this.userId+"?pId="+this.preItem.pId).then((res)=>{
                     console.log(res.data);
                     if (res.data.result!=null) {
                         alert("您的购物车中已存在该商品，请到购物车中付款吧！");
-                    }else{
+                    }else if (getCookie('username')) {
                         let data = {"uid":this.userId,"pid":this.preItem.pId,"pnumber":1,"pprice":this.preItem.pPrice,"pname":this.preItem.pName,"sid":this.preItem.sId};
                         console.log(data);
                         this.$axios.post('/netsc/trolley',data).then((res)=>{
@@ -144,6 +149,8 @@
                                 alert("添加成功！");
                             }
                         })
+                    }else {
+                        alert("请登录后再试！");
                     }
                 })
                 

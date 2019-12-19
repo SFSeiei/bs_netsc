@@ -1,7 +1,7 @@
 <template>
 	<!-- start personal Info  -->
 	<div id="sellerAudit" class="col-md-10 ">
-		<div class="col-md-12 bg-light">
+		<div class="col-md-12 bg-light pb-3">
 			<div class="tabbable pt-3" id="tabPerInfo">
 				<ul class="nav nav-tabs">
 					<li class="nav-item">

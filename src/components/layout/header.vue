@@ -48,10 +48,10 @@
                             <a ref="quit" class="nav-link text-muted pl-0" href="#" @click="quit()">退出</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-muted" href="/perCenter/myorders">我的订单</a>
+                            <a class="nav-link text-muted"  @click="checkDirect('/perCenter/myorders')">我的订单</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-muted" href="/perCenter/perMessage">个人中心</a>
+                            <a class="nav-link text-muted"  @click="checkDirect('/perCenter/perMessage')">个人中心</a>
                         </li> 
                         <li class="nav-item" v-if="walletIsOpening">
                             <a class="nav-link text-muted" data-toggle="modal" data-target="#myWallet" href="#">我的钱包</a>
@@ -106,26 +106,159 @@
                     <div class="col-10 col-lg-2 p-0 d-none d-lg-block">
                         <div>
                             <div class="float-sm-right border border-danger border-left-1">
-                                <a class="btn btn-danger dropdown-toggle pl-1 pr-1" data-toggle="dropdown"href="" rel="button" >
+                                <a class="btn btn-danger dropdown-toggle pl-1 pr-1" data-toggle="dropdown" href="" rel="button">
                                     <span class="dropdownName">
                                         全部蔬菜类型&nbsp;&nbsp;&nbsp;&nbsp;
                                     </span>
                                 </a>
                                 <!-- show -->
-                                <ul ref="allDropdownItems" id="allDropdownItem" class="dropdown-menu bg-danger dropdown-menu-right  border border-danger border-1" :class="{'show':allitemsShow}"> 
-                                    <li class="dropdown-item "><a href="#" class="text-white " hover="text-danger"><span>青菜类</span></a></li>
+                                <ul ref="allDropdownItems" id="allDropdownItem" class="dropdown-menu bg-danger dropdown-menu-right  border border-danger border-1" :class="{'show':allitemsShow}">
+                                    <li class="dropdown-item dropright">
+                                        <a class="text-white" data-toggle="dropdown" id="dropdownMenu1">
+                                            <span>肉类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        </a>
+                                        <div class="dropdown-menu ml-4 text-center" id="dropDownCur" v-show="showAllItem">
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('鸡肉')">鸡肉</a>
+                                            <div class="dropdown-divider bg-dark"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('鸭肉')">鸭肉</a>
+                                            <div class="dropdown-divider bg-info "></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('鹅肉')">鹅肉</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('猪肉')">猪肉</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('羊肉')">羊肉</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('牛肉')">牛肉</a>
+                                        </div>
+                                    </li>
                                     <div class="dropdown-divider bg-info"></div>
-                                    <li class="dropdown-item "><a href="#" class="text-white"><span>干货类</span></a></li>
+                                    <li class="dropdown-item dropright">
+                                        <a class="text-white" data-toggle="dropdown">
+                                            <span>鱼类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        </a>
+                                        <div class="dropdown-menu ml-4 text-center">
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('鲭鱼')">鲭鱼</a>
+                                            <div class="dropdown-divider bg-dark"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('草鱼')">草鱼</a>
+                                            <div class="dropdown-divider bg-info "></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('鲢鱼')">鲢鱼</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('鳙鱼')">鳙鱼</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('鲫鱼')">鲫鱼</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('章鱼')">章鱼</a>
+                                            <!--<table class="mx-auto table-responsive">-->
+                                                <!--<tr class="mx-auto">-->
+                                                    <!--<td><div class="mx-auto">&nbsp;&nbsp;鲭鱼</div></td>-->
+                                                    <!--<td>草鱼</td>-->
+                                                <!--</tr>-->
+                                                <!--<tr class="mx-auto">-->
+                                                    <!--<td>鲢鱼</td>-->
+                                                    <!--<td>鳙鱼</td>-->
+                                                <!--</tr>-->
+                                                <!--<tr class="mx-auto">-->
+                                                    <!--<td>鲫鱼</td>-->
+                                                    <!--<td>章鱼</td>-->
+                                                <!--</tr>-->
+                                            <!--</table>-->
+                                        </div>
+                                    </li>
                                     <div class="dropdown-divider"></div>
-                                    <li class="dropdown-item "><a href="#" class="text-white"><span>水产类</span></a></li>
+                                    <li class="dropdown-item dropright">
+                                        <a class="text-white" data-toggle="dropdown">
+                                            <span>瓜类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        </a>
+                                        <div class="dropdown-menu ml-4 text-center">
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('西瓜')">西瓜</a>
+                                            <div class="dropdown-divider bg-dark"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('哈密瓜')">哈密瓜</a>
+                                            <div class="dropdown-divider bg-info "></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('南瓜')">南瓜</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('冬瓜')">冬瓜</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('香瓜')">香瓜</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('丝瓜')">丝瓜</a>
+                                        </div>
+                                    </li>
                                     <div class="dropdown-divider"></div>
-                                    <li class="dropdown-item "><a href="#" class="text-white"><span>肉类</span></a></li>
+                                    <li class="dropdown-item dropright">
+                                        <a class="text-white" data-toggle="dropdown">
+                                            <span>菌类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        </a>
+                                        <div class="dropdown-menu ml-4 text-center">
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('木耳')">木耳</a>
+                                            <div class="dropdown-divider bg-dark"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('金针菇')">金针菇</a>
+                                            <div class="dropdown-divider bg-info "></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('香菇')">香菇</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('银耳')">银耳</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('平菇')">平菇</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('茶树菇')">茶树菇</a>
+                                        </div>
+                                    </li>
                                     <div class="dropdown-divider"></div>
-                                    <li class="dropdown-item "><a href="#" class="text-white"><span>瓜类</span></a></li>
+                                    <li class="dropdown-item dropright">
+                                        <a class="text-white" data-toggle="dropdown">
+                                            <span>蔬果类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        </a>
+                                        <div class="dropdown-menu ml-4 text-center">
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('西红柿')">西红柿</a>
+                                            <div class="dropdown-divider bg-dark"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('土豆')">土豆</a>
+                                            <div class="dropdown-divider bg-info "></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('青椒')">青椒</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('胡萝卜')">胡萝卜</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('白萝卜')">白萝卜</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('茄子')">茄子</a>
+                                        </div>
+                                    </li>
                                     <div class="dropdown-divider"></div>
-                                    <li class="dropdown-item "><a href="#" class="text-white"><span>菌类</span></a></li>
+                                    <li class="dropdown-item dropright">
+                                        <a class="text-white" data-toggle="dropdown">
+                                            <span>水产类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        </a>
+                                        <div class="dropdown-menu ml-4 text-center">
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('泥鳅')">泥鳅</a>
+                                            <div class="dropdown-divider bg-dark"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('扇贝')">扇贝</a>
+                                            <div class="dropdown-divider bg-info "></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('海参')">海参</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('甲鱼')">甲鱼</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('虾')">虾</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('蟹')">蟹</a>
+                                        </div>
+                                    </li>
                                     <div class="dropdown-divider"></div>
-                                    <li class="dropdown-item "><a href="#" class="text-white"><span>烧烤类</span></a></li>
+                                    <li class="dropdown-item dropright">
+                                        <a class="text-white" data-toggle="dropdown">
+                                            <span>青菜类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        </a>
+                                        <div class="dropdown-menu ml-4 text-center">
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('卷心菜')">卷心菜</a>
+                                            <div class="dropdown-divider bg-dark"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('花菜')">花菜</a>
+                                            <div class="dropdown-divider bg-info "></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('白菜')">白菜</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('韭菜')">韭菜</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('菠菜')">菠菜</a>
+                                            <div class="dropdown-divider bg-info"></div>
+                                            <a class="dropdown-item text-center " href="#" @click="selectgoods('油麦菜')">油麦菜</a>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -139,7 +272,7 @@
                         </button>
                         <!-- Navbar links -->
                         <div class="collapse navbar-collapse " id="collapsibleNavbar3">
-                            <ul class="navbar-nav ">
+                            <ul class="navbar-nav mx-auto">
                                 <li class="nav-item ml-1 mr-2 ">
                                     <a ref="home" class="nav-link text-white" href="/">商城首页</a>
                                 </li>
@@ -153,21 +286,21 @@
                                     <a class="nav-link text-white" href="#" @click="test1">积分商城</a>
                                 </li> -->
                                 <li class="nav-item ml-2 mr-3">
-                                    <a class="nav-link text-white" href="/perCenter/perMessage">个人中心</a>
+                                    <a class="nav-link text-white" @click="checkDirect('/perCenter/perMessage')">个人中心</a>
                                 </li>
                                 <li class="nav-item ml-2 mr-3">
-                                    <a class="nav-link text-white" href="/perCenter/myorders">我的订单</a>
+                                    <a class="nav-link text-white" @click="checkDirect('/perCenter/myorders')">我的订单</a>
                                 </li>
+                                <!--<li class="nav-item ml-2 mr-3">-->
+                                    <!--<a class="nav-link text-white" href="/perCenter/perMessage">我的特权</a>-->
+                                <!--</li>-->
                                 <li class="nav-item ml-2 mr-3">
-                                    <a class="nav-link text-white" href="/perCenter/perMessage">我的特权</a>
-                                </li>
-                                <li class="nav-item ml-2 mr-3">
-                                    <a class="nav-link text-white" href="/perCenter/perMessage">我的资料</a>
+                                    <a class="nav-link text-white" @click="checkDirect('/perCenter/perMessage')">我的资料</a>
                                 </li>
                                 
-                                <li class="nav-item ml-1 mr-2">
-                                    <a class="nav-link text-white" href="/perCenter/perMessage">我的任务</a>
-                                </li>
+                                <!--<li class="nav-item ml-1 mr-2">-->
+                                    <!--<a class="nav-link text-white" href="/perCenter/perMessage">我的任务</a>-->
+                                <!--</li>-->
                             </ul>
                         </div>
                     </nav>
@@ -181,7 +314,7 @@
                     <!-- start cart list -->
                     <div class="col-lg-2 pl-0 d-none d-lg-block">
                         <div id="cartlist" class="float-lg-left">
-                            <a id="cartlistButton" class="btn btn-danger " href="/allitems/trolley" rel="button" >
+                            <a id="cartlistButton" class="btn btn-danger text-white" @click="checkDirect('/allitems/trolley')"rel="button" >
                                 <span class="border border-left-0 border-bottom-0 border-top-0 float-left pl-2 pr-4">
                                     购物车
                                 </span>
@@ -207,7 +340,7 @@
                             <div class="modal-body">
                                 <form role="form" class="p-4 border" @submit.prevent=''>
                                     <div class=" mt-3 mb-3" v-if="!isFirstUse && walletIsOpening">
-                                        <label for="">
+                                        <label>
                                             余额：
                                         </label>
                                         <label class="ml-3">
@@ -220,7 +353,7 @@
                                         </button>
                                     </div>
                                     <div class=" mt-3 mb-3" v-if="!walletIsOpening">
-                                        <label for="" class="">
+                                        <label class="">
                                             亲爱的 <span class="text-danger">{{username}}</span>,你还未开通个人钱包哦！
                                         </label>
                                     </div>
@@ -230,7 +363,7 @@
                                         </button>
                                     </div>
                                     <div class=" mt-3 mb-3" v-if="walletIsOpening && isFirstUse">
-                                        <label for="" class="">
+                                        <label class="">
                                             您已开通个人钱包，请设置一个支付密码。
                                         </label>
                                     </div>
@@ -240,7 +373,7 @@
                                                 支付密码：
                                             </label>
                                             <div class="input-group-append">
-                                                <input type="text " class=" form-control ml-3" v-model="payPassword" />
+                                                <input type="password" maxlength="6" class="form-control ml-3" v-model="payPassword" />
                                             </div>
                                         </div>  
                                     </div>
@@ -281,7 +414,7 @@
                             <div class="modal-body">
                                 <form role="form" class="p-4 border" @submit.prevent=''>
                                     <div class=" mt-3 mb-3">
-                                        <label for="" class="">
+                                        <label class="">
                                             请输入充值金额。
                                         </label>
                                     </div>
@@ -291,7 +424,7 @@
                                                 重置金额：
                                             </label>
                                             <div class="input-group-append">
-                                                <input type="text " class=" form-control ml-3" id="" v-model="rechargeMoney" />
+                                                <input type="text" class=" form-control ml-3" v-model="rechargeMoney" />
                                             </div>
                                             <label >
                                                 元
@@ -328,6 +461,15 @@
 </template>
 <script>
     import {setCookie,getCookie,delCookie} from '@/pages/index/assets/js/cookie.js'
+    $("#dropdownMenu1").hover(
+        function(){
+            $("#dropDownCur").show();
+        });//为了鼠标可以进入下拉框
+    $("#dropDownCur").hover(function() {
+        $(this).show();//鼠标进入下拉框
+    }, function() {
+        $(this).hide();//鼠标离开下拉框后，就会消失
+    });
 /* eslint-disable */
 export default {
     name: 'headerDiv',
@@ -349,7 +491,8 @@ export default {
             money:null,
             rechargeMoney:0,
             menuKey:1,
-            searchMessage:null
+            searchMessage:null,
+            showAllItem:true
         }
     },
     props: ['logourl','payimgurl'],
@@ -376,6 +519,12 @@ export default {
                 console.log(res.data);
                 if (res.data.result != null) {
                     this.user = res.data.result;
+                }
+            })
+            this.$axios.get("/netsc/trolleys/uid="+this.uId).then((res)=>{
+                console.log(res.data);
+                if (res.data.result != null) {
+                    this.cartNumber = res.data.result.length;
                 }
             })
         }
@@ -415,21 +564,28 @@ export default {
             });
             window.location.reload();
         },
+        selectgoods(item){
+            this.searchMessage = item;
+            this.search();
+        },
         addWallet(){
-            let data = {"firstUse":"true","money":0,"payPassword":null,"uid":this.uId,"wname":this.username+"的钱包"};
-            // console.log(data)
-            this.$axios.post('/netsc/wallet',data).then((res)=>{
-                console.log(res.data);
-                if (res.data.status ==="ok") {
-                    alert("开通成功！");
-                    window.location.reload();
-                }else{
-                    alert("开通失败！");
-                }
-            });
-            this.walletIsOpening = true;
-            this.isFirstUse = true;
-            this.$forceUpdate();
+            if(getCookie('username')){
+                let data = {"firstUse":"true","money":0,"payPassword":null,"uid":this.uId,"wname":this.username+"的钱包"};
+                // console.log(data)
+                this.$axios.post('/netsc/wallet',data).then((res)=>{
+                    console.log(res.data);
+                    if (res.data.status ==="ok") {
+                        alert("开通成功！");
+                    }else{
+                        alert("开通失败！");
+                    }
+                });
+                this.walletIsOpening = true;
+                this.isFirstUse = true;
+                this.$forceUpdate();
+            }else {
+                alert("请登录后再试！")
+            }
         },
         checkWallet(){
             let data = {"firstUse":"false","money":0,"payPassword":this.payPassword};
@@ -437,13 +593,22 @@ export default {
             this.$axios.put('/netsc/wallet/'+this.uId,data).then((res)=>{
                 console.log(res.data);
                 if (res.data.status ==="ok") {
-                    alert("设置成功！");
-                    window.location.reload();
+                    this.$axios.get("/netsc/wallet/uid="+this.uId).then((res)=>{
+                        console.log(res.data);
+                        if (res.data.result != null) {
+                            this.walletIsOpening = true;
+                            if(res.data.result.firstUse==="false"){
+                                alert("设置成功！");
+                                this.isFirstUse = false;
+                                this.money = res.data.result.money;
+                            }
+                        }
+                    })
                 }else{
                     alert("设置失败！");
                 }
             });
-            this.$forceUpdate()
+            this.$forceUpdate();
         },
         recharge(){
             var sum = parseFloat(this.money)+parseFloat(this.rechargeMoney);
@@ -452,14 +617,40 @@ export default {
             this.$axios.put('/netsc/wallet/'+this.uId,data).then((res)=>{
                 console.log(res.data);
                 if (res.data.status ==="ok") {
-                    alert("充值成功！");
-                    window.location.reload();
+                    this.$axios.get("/netsc/wallet/uid="+this.uId).then((res)=>{
+                        console.log(res.data);
+                        if (res.data.result != null) {
+                            this.walletIsOpening = true;
+                            if(res.data.result.firstUse==="false"){
+                                alert("充值成功！");
+                                this.isFirstUse = false;
+                                this.money = res.data.result.money;
+                            }
+                        }
+                    })
                 }else{
                     alert("充值失败！");
                 }
             })
 
+        },
+        checkDirect(str){
+            if (getCookie('username')){
+                this.$router.push({
+                    path: str
+                });
+            }
+            else {
+                alert('请登录后再试！');
+            }
         }
+    },
+    watch: {
+        payPassword(curVal) {
+            if(/[^\d]/g.test(curVal)) {
+                this.payPassword = this.payPassword.replace(/[^\d]/g, '');
+            }
+        },
     },
     computed:{
         allitemsShow:function(){
@@ -516,5 +707,12 @@ export default {
     .payPasswordInputGroup{
         margin:auto;
     }
-
+    /*------------------------修改type=number的样式------------------------------------------------*/
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    input[type="number"]{
+        -moz-appearance: textfield;
+    }
 </style>

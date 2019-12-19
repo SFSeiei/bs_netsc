@@ -5,7 +5,7 @@
             <div class="container ">
                 <div class="row">
                     <!-- start carousel -->
-                    <div class="col-md-8 offset-md-2 p-0 " style="height: 347px;">
+                    <div class="col-md-8 offset-md-2 p-0 d-none d-lg-block" style="height: 347px;">
                         <div id="miancarousel" class="carousel slide" data-ride="carousel" data-interval="1000">
                             <!-- 指示符 -->
                             <ul class="carousel-indicators">
@@ -103,7 +103,7 @@
                                             </div>
                                             <div class="float-left ml-2">
                                                 <strong class="text-left small">[{{product.bCName}}]{{product.pName}}</strong><br>
-                                                <span class="text-left small text-danger">平台价：{{product.pMemPrice}}/斤</span><br>
+                                                <span class="text-left small text-danger">平台价：{{product.pMemPrice}}元/斤</span><br>
                                                 <span class="text-left small">剩余时间：{{product.day}}天</span><br>
                                                 <button  @click="buyNow(product)" class="float-left btn btn-danger btn-sm">立即抢购</button>
                                             </div>
@@ -116,7 +116,7 @@
                                             </div>
                                             <div class="float-left ml-2">
                                                 <strong class="text-left small">[{{product.bCName}}]{{product.pName}}</strong><br>
-                                                <span class="text-left small text-danger">平台价：{{product.pMemPrice}}/斤</span><br>
+                                                <span class="text-left small text-danger">平台价：{{product.pMemPrice}}元/斤</span><br>
                                                 <span class="text-left small">剩余时间：{{product.day}}天</span><br>
                                                 <button  @click="buyNow(product)" class="float-left btn btn-danger btn-sm">立即抢购</button>
                                             </div>
@@ -138,7 +138,7 @@
                                             </div>
                                             <div class="float-left ml-2 mr-2 w-100 pr-3 ">
                                                 <strong class="text-left small mt-1">[{{product.bCName}}]{{product.pName}}</strong><br>
-                                                <span class="text-left small text-danger">秒杀价：{{product.pMemPrice}}/斤</span><br>
+                                                <span class="text-left small text-danger">秒杀价：{{product.pMemPrice}}元/斤</span><br>
                                                 <button class="float-left btn btn-danger btn-sm w-100 mt-2 mb-2">查看详情</button>
                                             </div>
                                         </td>
@@ -169,7 +169,7 @@
                                                 <div class="">
                                                     <strong class="small">[{{product.bCName}}]</strong><br>
                                                     <span class="text-secondary">{{product.pName}}</span><br>
-                                                    <span class="text-left small text-danger">平台价：{{product.pMemPrice}}/斤</span>
+                                                    <span class="text-left small text-danger">平台价：{{product.pMemPrice}}元/斤</span>
                                                 </div>
                                             </td>
                                         </tr>
@@ -185,12 +185,11 @@
                                 <tr>
                                     <td class="p-1 m-1">
                                         <div>
-                                            <button class="float-left btn btn-danger btn-lg w-100 ">暂无签到</button>
+                                            <button class="float-left btn btn-secondary btn-lg w-100 disabled">暂无签到</button>
                                         </div>
                                         <div class="float-left ml-2 mr-2 w-100 pr-3">
                                             <strong class="text-left small">已累计签到0天，你的消费总计0元</strong><br>
-                                            <span class="text-left small ">点此查看<a href="#
-                                            ">消费详细情况</a></span><br>
+                                            <span class="text-left small ">点此查看<a href="#">消费详细情况</a></span><br>
                                         </div>
                                     </td>
                                 </tr>
@@ -244,154 +243,66 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h5 class="float-left"><img :src="mainIcon4" class="pb-1" style="{width: 24px;height:28px;}"><span class="ml-2">{类型}专区</span></h5>
+                            <h5 class="float-left"><img :src="mainIcon4" class="pb-1" style="{width: 24px;height:28px;}"><span class="ml-2">肉类专区</span></h5>
                         </div>
                     </div>
                 </div>
                 <div class="container pr-0">
                     <div class="container bg-light border">
                         <div class="row">
-                                <img :src="class1" style="{width:240px;height: 305px;width:240px;}">
+                                <img class="d-none d-lg-block" :src="class1" style="{width:240px;height: 305px;width:240px;}">
                             <div class="col-lg-7 col-md-12 col-sm-12">
-                                <table id="bodyFourTable" class="table table-bordered bg-faded h-100 border-top-0 border-bottom-0 table-responsive" >
-                                    <tbody>
+                                <table id="bodyFourTable" class="table table-bordered bg-faded h-100 border-top-0 border-bottom-0 table-responsive pt-4" >
+                                    <tbody class="">
                                         <tr>
-                                            <td>
+                                            <td v-for="(product,index) in threeProductsOne1" :key="product.index" @click="buyNow(product)">
                                                 <div class="float-left ml-2">
-                                                    <strong class="float-left">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
+                                                    <strong class="float-left">{{product.pName}}</strong><br>
+                                                    <span class="float-left small text-danger">平台价:{{product.pMemPrice}}元/斤</span><br>
+                                                    <span class="float-left small">原价:<del>{{product.pPrice}}</del>元/斤</span>
                                                 </div>
                                                 <div class="float-left ml-2">
-                                                    <img :src="test6url">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left ">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <img :src="test6url">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div> 
-                                                <div class="float-left ml-2">
-                                                    <img :src="test6url">
+                                                    <img :src="product.pPhoto" style="height: 72px;width:90px;">
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td v-for="(product,index) in threeProductsOne2" :key="product.index" @click="buyNow(product)">
                                                 <div class="float-left">
-                                                    <img :src="testurl">
+                                                    <img :src="product.pPhoto" style="width: 56px;height: 48px;">
                                                 </div>
                                                 <div class="float-left ml-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="float-left">
-                                                    <img :src="testurl">
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="float-left">
-                                                    <img :src="testurl">
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
+                                                    <strong class="float-left small">{{product.pName}}</strong><br>
+                                                    <span class="float-left small text-danger">平台价:{{product.pMemPrice}}元/斤</span><br>
+                                                    <span class="float-left small">原价:<del>{{product.pPrice}}</del>元/斤</span>
                                                 </div>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-lg-2 p-0 col-sm-12">
+                            <div class="col-lg-2 p-0 col-sm-12 d-none d-xl-block">
                                 <table class="ml-auto mr-auto table-responsive">
                                     <tbody>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="firsturl">
-                                                </div>
+                                        <tr class="pt-2 mb-1">
+                                            <td class="pt-2 pb-2" v-for="(product,index) in OneProductsOne" :key="product.index" @click="buyNow(product)">
                                                 <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
+                                                    <strong class="float-left small">{{product.pName}}</strong><br>
+                                                    <span class="float-left small text-danger">平台价:{{product.pMemPrice}}元/斤</span>
                                                 </div>
                                                 <div class="float-right">
-                                                    <img :src="testurl">
+                                                    <img :src="product.pPhoto" style="width: 55px;height: 45px;">
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="secondurl">
-                                                </div>
+                                        <tr class="pt-1 mb-1" v-for="(product,index) in FourProductsOne" :key="product.index" @click="buyNow(product)">
+                                            <td class="pt-2 pb-2" >
                                                 <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
+                                                    <strong class="float-left small">{{product.pName}}</strong><br>
+                                                    <span class="float-left small text-danger">平台价:{{product.pMemPrice}}元/斤</span>
                                                 </div>
                                                 <div class="float-right">
-                                                    <img :src="test7url">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="thirdurl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="test7url">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="fourthurl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="test7url">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="fifthurl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="test7url">
+                                                    <img :src="product.pPhoto" style="width: 55px;height: 45px;">
                                                 </div>
                                             </td>
                                         </tr>
@@ -410,157 +321,69 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h5 class="float-left"><img :src="mainIcon5" class="pb-1" style="{width: 24px;height:28px;}"><span class="ml-2">{类型}专区</span></h5>
+                            <h5 class="float-left"><img :src="mainIcon5" class="pb-1" style="{width: 24px;height:28px;}"><span class="ml-2">蔬果类专区</span></h5>
                         </div>
                     </div>
                 </div>
                 <div class="container pr-0">
                     <div class="container bg-light border">
                         <div class="row">
-                                <img :src="class2" style="{width:240px;height: 305px;width:240px;}">
+                            <img class="d-none d-lg-block" :src="class2" style="{width:240px;height: 305px;width:240px;}">
                             <div class="col-lg-7 col-md-12 col-sm-12">
-                                <table id="bodyFiveTable" class="table table-bordered bg-faded h-100 border-top-0 border-bottom-0 table-responsive">
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <img :src="test6url">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left ">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <img :src="test6url">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div> 
-                                                <div class="float-left ml-2">
-                                                    <img :src="test6url">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="float-left">
-                                                    <img :src="testurl">
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="float-left">
-                                                    <img :src="testurl">
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="float-left">
-                                                    <img :src="testurl">
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                <table id="bodyFiveTable" class="table table-bordered bg-faded h-100 border-top-0 border-bottom-0 table-responsive pt-4" >
+                                    <tbody class="">
+                                    <tr>
+                                        <td v-for="(product,index) in threeProductsTow1" :key="product.index" @click="buyNow(product)">
+                                            <div class="float-left ml-2">
+                                                <strong class="float-left">{{product.pName}}</strong><br>
+                                                <span class="float-left small text-danger">平台价:{{product.pMemPrice}}元/斤</span><br>
+                                                <span class="float-left small">原价:<del>{{product.pPrice}}</del>元/斤</span>
+                                            </div>
+                                            <div class="float-left ml-2">
+                                                <img :src="product.pPhoto" style="height: 72px;width:90px;">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td v-for="(product,index) in threeProductsTow2" :key="product.index" @click="buyNow(product)">
+                                            <div class="float-left">
+                                                <img :src="product.pPhoto" style="width: 56px;height: 48px;">
+                                            </div>
+                                            <div class="float-left ml-2">
+                                                <strong class="float-left small">{{product.pName}}</strong><br>
+                                                <span class="float-left small text-danger">平台价:{{product.pMemPrice}}元/斤</span><br>
+                                                <span class="float-left small">原价:<del>{{product.pPrice}}</del>元/斤</span>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-lg-2 p-0 col-sm-12">
+                            <div class="col-lg-2 p-0 col-sm-12 d-none d-xl-block">
                                 <table class="ml-auto mr-auto table-responsive">
                                     <tbody>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="firsturl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="testurl">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="secondurl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="test7url">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="thirdurl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="test7url">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="fourthurl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="test7url">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="fifthurl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="test7url">
-                                                </div>
-                                            </td>
-                                        </tr>
+                                    <tr class="pt-2 mb-1">
+                                        <td class="pt-2 pb-2" v-for="(product,index) in OneProductsTow" :key="product.index" @click="buyNow(product)">
+                                            <div class="float-left ml-2 mr-2">
+                                                <strong class="float-left small">{{product.pName}}</strong><br>
+                                                <span class="float-left small text-danger">平台价:{{product.pMemPrice}}元/斤</span>
+                                            </div>
+                                            <div class="float-right">
+                                                <img :src="product.pPhoto" style="width: 55px;height: 45px;">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="pt-1 mb-1" v-for="(product,index) in FourProductsTow" :key="product.index" @click="buyNow(product)">
+                                        <td class="pt-2 pb-2" >
+                                            <div class="float-left ml-2 mr-2">
+                                                <strong class="float-left small">{{product.pName}}</strong><br>
+                                                <span class="float-left small text-danger">平台价:{{product.pMemPrice}}元/斤</span>
+                                            </div>
+                                            <div class="float-right">
+                                                <img :src="product.pPhoto" style="width: 55px;height: 45px;">
+                                            </div>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -576,157 +399,69 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h5 class="float-left"><img :src="mainIcon6" class="pb-1" style="{width: 24px;height:28px;}"><span class="ml-2">{类型}专区</span></h5>
+                            <h5 class="float-left"><img :src="mainIcon6" class="pb-1" style="{width: 24px;height:28px;}"><span class="ml-2">水产类专区</span></h5>
                         </div>
                     </div>
                 </div>
                 <div class="container pr-0">
                     <div class="container bg-light border">
                         <div class="row">
-                                <img :src="class3" style="{width:240px;height: 305px;width:240px;}">
+                            <img class="d-none d-lg-block" :src="class3" style="{width:240px;height: 305px;width:240px;}">
                             <div class="col-lg-7 col-md-12 col-sm-12">
-                                <table id="bodySixTable" class="table table-bordered bg-faded h-100 border-top-0 border-bottom-0 table-responsive">
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <img :src="test6url">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left ">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <img :src="test6url">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div> 
-                                                <div class="float-left ml-2">
-                                                    <img :src="test6url">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="float-left">
-                                                    <img :src="testurl">
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="float-left">
-                                                    <img :src="testurl">
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="float-left">
-                                                    <img :src="testurl">
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                <table id="bodySixTable" class="table table-bordered bg-faded h-100 border-top-0 border-bottom-0 table-responsive pt-4" >
+                                    <tbody class="">
+                                    <tr>
+                                        <td v-for="(product,index) in threeProductsThree1" :key="product.index" @click="buyNow(product)">
+                                            <div class="float-left ml-2">
+                                                <strong class="float-left">{{product.pName}}</strong><br>
+                                                <span class="float-left small text-danger">平台价:{{product.pMemPrice}}元/斤</span><br>
+                                                <span class="float-left small">原价:<del>{{product.pPrice}}</del>元/斤</span>
+                                            </div>
+                                            <div class="float-left ml-2">
+                                                <img :src="product.pPhoto" style="height: 72px;width:90px;">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td v-for="(product,index) in threeProductsThree2" :key="product.index" @click="buyNow(product)">
+                                            <div class="float-left">
+                                                <img :src="product.pPhoto" style="width: 56px;height: 48px;">
+                                            </div>
+                                            <div class="float-left ml-2">
+                                                <strong class="float-left small">{{product.pName}}</strong><br>
+                                                <span class="float-left small text-danger">平台价:{{product.pMemPrice}}元/斤</span><br>
+                                                <span class="float-left small">原价:<del>{{product.pPrice}}</del>元/斤</span>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-lg-2 p-0 col-sm-12">
+                            <div class="col-lg-2 p-0 col-sm-12 d-none d-xl-block">
                                 <table class="ml-auto mr-auto table-responsive">
                                     <tbody>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="firsturl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="testurl">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="secondurl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="test7url">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="thirdurl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="test7url">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="fourthurl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="test7url">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="fifthurl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="test7url">
-                                                </div>
-                                            </td>
-                                        </tr>
+                                    <tr class="pt-2 mb-1">
+                                        <td class="pt-2 pb-2" v-for="(product,index) in OneProductsThree" :key="product.index" @click="buyNow(product)">
+                                            <div class="float-left ml-2 mr-2">
+                                                <strong class="float-left small">{{product.pName}}</strong><br>
+                                                <span class="float-left small text-danger">平台价:{{product.pMemPrice}}元/斤</span>
+                                            </div>
+                                            <div class="float-right">
+                                                <img :src="product.pPhoto" style="width: 55px;height: 45px;">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="pt-1 mb-1" v-for="(product,index) in FourProductsThree" :key="product.index" @click="buyNow(product)">
+                                        <td class="pt-2 pb-2" >
+                                            <div class="float-left ml-2 mr-2">
+                                                <strong class="float-left small">{{product.pName}}</strong><br>
+                                                <span class="float-left small text-danger">平台价:{{product.pMemPrice}}元/斤</span>
+                                            </div>
+                                            <div class="float-right">
+                                                <img :src="product.pPhoto" style="width: 55px;height: 45px;">
+                                            </div>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -742,157 +477,69 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h5 class="float-left"><img :src="mainIcon7" class="pb-1" style="{width: 24px;height:28px;}"><span class="ml-2">{类型}专区</span></h5>
+                            <h5 class="float-left"><img :src="mainIcon7" class="pb-1" style="{width: 24px;height:28px;}"><span class="ml-2">青菜类专区</span></h5>
                         </div>
                     </div>
                 </div>
                 <div class="container pr-0">
                     <div class="container bg-light border">
                         <div class="row">
-                                <img :src="class4" style="{width:240px;height: 305px;width:240px;}">
+                            <img class="d-none d-lg-block" :src="class4" style="{width:240px;height: 305px;width:240px;}">
                             <div class="col-lg-7 col-md-12 col-sm-12">
-                                <table id="bodySevenTable" class="table table-bordered bg-faded h-100 border-top-0 border-bottom-0 table-responsive">
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <img :src="test6url">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left ">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <img :src="test6url">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div> 
-                                                <div class="float-left ml-2">
-                                                    <img :src="test6url">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="float-left">
-                                                    <img :src="testurl">
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="float-left">
-                                                    <img :src="testurl">
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="float-left">
-                                                    <img :src="testurl">
-                                                </div>
-                                                <div class="float-left ml-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span><br>
-                                                    <span class="float-left small">原价:{money}</span>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                <table id="bodySevenTable" class="table table-bordered bg-faded h-100 border-top-0 border-bottom-0 table-responsive pt-4" >
+                                    <tbody class="">
+                                    <tr>
+                                        <td v-for="(product,index) in threeProductsFour1" :key="product.index" @click="buyNow(product)">
+                                            <div class="float-left ml-2">
+                                                <strong class="float-left">{{product.pName}}</strong><br>
+                                                <span class="float-left small text-danger">平台价:{{product.pMemPrice}}元/斤</span><br>
+                                                <span class="float-left small">原价:<del>{{product.pPrice}}</del>元/斤</span>
+                                            </div>
+                                            <div class="float-left ml-2">
+                                                <img :src="product.pPhoto" style="height: 72px;width:90px;">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td v-for="(product,index) in threeProductsFour2" :key="product.index" @click="buyNow(product)">
+                                            <div class="float-left">
+                                                <img :src="product.pPhoto" style="width: 56px;height: 48px;">
+                                            </div>
+                                            <div class="float-left ml-2">
+                                                <strong class="float-left small">{{product.pName}}</strong><br>
+                                                <span class="float-left small text-danger">平台价:{{product.pMemPrice}}元/斤</span><br>
+                                                <span class="float-left small">原价:<del>{{product.pPrice}}</del>元/斤</span>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-lg-2 p-0 col-sm-12">
+                            <div class="col-lg-2 p-0 col-sm-12 d-none d-xl-block">
                                 <table class="ml-auto mr-auto table-responsive">
                                     <tbody>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="firsturl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="testurl">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="secondurl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="test7url">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="thirdurl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="test7url">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="fourthurl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="test7url">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pt-2 pb-1">
-                                                <div class="float-left">
-                                                    <img :src="fifthurl">
-                                                </div>
-                                                <div class="float-left ml-2 mr-2">
-                                                    <strong class="float-left small">卷心菜</strong><br>
-                                                    <span class="float-left small text-danger">商城价:5元</span>
-                                                </div>
-                                                <div class="float-right">
-                                                    <img :src="test7url">
-                                                </div>
-                                            </td>
-                                        </tr>
+                                    <tr class="pt-2 mb-1">
+                                        <td class="pt-2 pb-2" v-for="(product,index) in OneProductsFour" :key="product.index" @click="buyNow(product)">
+                                            <div class="float-left ml-2 mr-2">
+                                                <strong class="float-left small">{{product.pName}}</strong><br>
+                                                <span class="float-left small text-danger">平台价:{{product.pMemPrice}}元/斤</span>
+                                            </div>
+                                            <div class="float-right">
+                                                <img :src="product.pPhoto" style="width: 55px;height: 45px;">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="pt-1 mb-1" v-for="(product,index) in FourProductsFour" :key="product.index" @click="buyNow(product)">
+                                        <td class="pt-2 pb-2" >
+                                            <div class="float-left ml-2 mr-2">
+                                                <strong class="float-left small">{{product.pName}}</strong><br>
+                                                <span class="float-left small text-danger">平台价:{{product.pMemPrice}}元/斤</span>
+                                            </div>
+                                            <div class="float-right">
+                                                <img :src="product.pPhoto" style="width: 55px;height: 45px;">
+                                            </div>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -903,7 +550,7 @@
         </div>
         <!-- end main body-seven -->
         <!-- start main body-eight -->
-        <div id="mainBodyEight">
+        <div id="mainBodyEight" class="mt-3 mb-3">
             <div class="container">
                 <div class="container pr-0 ">
                     <div class="container pr-0 bg-light">
@@ -932,49 +579,73 @@ export default {
     name: 'mainDiv',
     data () {
         return {
-        msg: 'Welcome to Your Vue.js App',
-        username:"您还未登录！",
-        uId:null,
-        roleId:null,
-        user:{"userImage":require("@/pages/index/assets/img/userImage/00.png")},
-        myphoto:require("@/pages/index/assets/img/userImage/00.png"),
-        bannerurl1: require('@/pages/index/assets/img/banner/banner1.jpg'),
-        bannerurl2: require('@/pages/index/assets/img/banner/banner2.jpg'),
-        bannerurl3: require('@/pages/index/assets/img/banner/banner3.jpg'),
-        class1:require('@/pages/index/assets/img/classes/timg (1).jpg'),
-        class2:require('@/pages/index/assets/img/classes/timg (2).jpg'),
-        class3:require('@/pages/index/assets/img/classes/timg (3).jpg'),
-        class4:require('@/pages/index/assets/img/classes/timg (4).jpg'),
-        testurl:require('@/pages/index/assets/img/test/test.jpg'),
-        test2url:require('@/pages/index/assets/img/test/test2.jpg'),
-        test3url:require('@/pages/index/assets/img/test/test3.jpg'),
-        activity1url:require('@/pages/index/assets/img/activity/activity1.jpg'),
-        activity2url:require('@/pages/index/assets/img/activity/activity2.jpg'),
-        activity3url:require('@/pages/index/assets/img/activity/activity3.jpg'),
-        activity4url:require('@/pages/index/assets/img/activity/activity4.jpg'),
-        activity5url:require('@/pages/index/assets/img/activity/activity5.jpg'),
-        activity6url:require('@/pages/index/assets/img/activity/activity6.jpg'),
-        test5url:require('@/pages/index/assets/img/test/test5.jpg'),
-        test6url:require('@/pages/index/assets/img/test/test6.jpg'),
-        test7url:require('@/pages/index/assets/img/test/test7.jpg'),
-        firsturl:require('@/pages/index/assets/img/test/first.png'),
-        secondurl:require('@/pages/index/assets/img/test/second.png'),
-        thirdurl:require('@/pages/index/assets/img/test/third.png'),
-        fourthurl:require('@/pages/index/assets/img/test/fourth.png'),
-        fifthurl:require('@/pages/index/assets/img/test/fifth.png'),
-        mainIcon1:require('@/pages/index/assets/img/icons/icon1.jpg'),
-        mainIcon2:require('@/pages/index/assets/img/icons/icon2.jpg'),
-        mainIcon3:require('@/pages/index/assets/img/icons/icon3.jpg'),
-        mainIcon4:require('@/pages/index/assets/img/icons/icon4.jpg'),
-        mainIcon5:require('@/pages/index/assets/img/icons/icon5.jpg'),
-        mainIcon6:require('@/pages/index/assets/img/icons/icon6.jpg'),
-        mainIcon7:require('@/pages/index/assets/img/icons/icon7.jpg'),
-        mainIcon8:require('@/pages/index/assets/img/icons/icon11.jpg'),
-        allProducts:[],
-        sixProducts:[],
-        threeProducts1:[],
-        threeProducts2:[],
-        threeProducts3:[]
+            msg: 'Welcome to Your Vue.js App',
+            username: "您还未登录！",
+            uId: null,
+            roleId: null,
+            user: {"userImage": require("@/pages/index/assets/img/userImage/00.png")},
+            myphoto: require("@/pages/index/assets/img/userImage/00.png"),
+            bannerurl1: require('@/pages/index/assets/img/banner/banner1.jpg'),
+            bannerurl2: require('@/pages/index/assets/img/banner/banner2.jpg'),
+            bannerurl3: require('@/pages/index/assets/img/banner/banner3.jpg'),
+            class1: require('@/pages/index/assets/img/classes/timg (1).jpg'),
+            class2: require('@/pages/index/assets/img/classes/timg (2).jpg'),
+            class3: require('@/pages/index/assets/img/classes/timg (3).jpg'),
+            class4: require('@/pages/index/assets/img/classes/timg (4).jpg'),
+            testurl: require('@/pages/index/assets/img/test/test.jpg'),
+            test2url: require('@/pages/index/assets/img/test/test2.jpg'),
+            test3url: require('@/pages/index/assets/img/test/test3.jpg'),
+            activity1url: require('@/pages/index/assets/img/activity/activity1.jpg'),
+            activity2url: require('@/pages/index/assets/img/activity/activity2.jpg'),
+            activity3url: require('@/pages/index/assets/img/activity/activity3.jpg'),
+            activity4url: require('@/pages/index/assets/img/activity/activity4.jpg'),
+            activity5url: require('@/pages/index/assets/img/activity/activity5.jpg'),
+            activity6url: require('@/pages/index/assets/img/activity/activity6.jpg'),
+            test5url: require('@/pages/index/assets/img/test/test5.jpg'),
+            test6url: require('@/pages/index/assets/img/test/test6.jpg'),
+            test7url: require('@/pages/index/assets/img/test/test7.jpg'),
+            furl1: require('@/pages/index/assets/img/test/first.png'),
+            furl2: require('@/pages/index/assets/img/test/second.png'),
+            furl3: require('@/pages/index/assets/img/test/third.png'),
+            furl4: require('@/pages/index/assets/img/test/fourth.png'),
+            furl5: require('@/pages/index/assets/img/test/fifth.png'),
+            mainIcon1: require('@/pages/index/assets/img/icons/icon1.jpg'),
+            mainIcon2: require('@/pages/index/assets/img/icons/icon2.jpg'),
+            mainIcon3: require('@/pages/index/assets/img/icons/icon3.jpg'),
+            mainIcon4: require('@/pages/index/assets/img/icons/icon4.jpg'),
+            mainIcon5: require('@/pages/index/assets/img/icons/icon5.jpg'),
+            mainIcon6: require('@/pages/index/assets/img/icons/icon6.jpg'),
+            mainIcon7: require('@/pages/index/assets/img/icons/icon7.jpg'),
+            mainIcon8: require('@/pages/index/assets/img/icons/icon11.jpg'),
+            allProducts: [],
+            sixProducts: [],
+            threeProducts1: [],
+            threeProducts2: [],
+            threeProducts3: [],
+            type1:'肉类',
+            allProducts1: [],
+            threeProductsOne1:[],
+            threeProductsOne2:[],
+            OneProductsOne:[],
+            FourProductsOne:[],
+            type2:'蔬果类',
+            allProducts2: [],
+            threeProductsTow1:[],
+            threeProductsTow2:[],
+            OneProductsTow:[],
+            FourProductsTow:[],
+            type3:'水产类',
+            allProducts3: [],
+            threeProductsThree1:[],
+            threeProductsThree2:[],
+            OneProductsThree:[],
+            FourProductsThree:[],
+            type4:'青菜类',
+            allProducts4: [],
+            threeProductsFour1:[],
+            threeProductsFour2:[],
+            OneProductsFour:[],
+            FourProductsFour:[],
         }
     },
     mounted(){
@@ -982,10 +653,10 @@ export default {
             console.log(res.data)
             if (res.data.result != null) {
                 this.allProducts = res.data.result
-                this.sixProducts = this.getRandomArrayElements(this.allProducts,6)
-                this.threeProducts1 = this.getRandomArrayElements(this.allProducts,3)
-                this.threeProducts2 = this.getRandomArrayElements(this.allProducts,3)
-                this.threeProducts3 = this.getRandomArrayElements(this.allProducts,3)
+                this.sixProducts = this.getRandomArrayElements(this.allProducts,6);
+                this.threeProducts1 = this.getRandomArrayElements(this.allProducts,3);
+                this.threeProducts2 = this.getRandomArrayElements(this.allProducts,3);
+                this.threeProducts3 = this.getRandomArrayElements(this.allProducts,3);
                 for (var i = 0;i<this.threeProducts1.length;i++) {
                     this.threeProducts1[i].day = this.randomNum(1,30)
                 }
@@ -993,7 +664,47 @@ export default {
                     this.threeProducts2[i].day = this.randomNum(1,30)
                 }
             }
-        })
+        });
+        this.$axios.get('/netsc/products/bCName='+this.type1).then((res) => {
+            console.log(res.data);
+            if (res.data.result != null) {
+                this.allProducts1 = res.data.result;
+                this.threeProductsOne1 = this.getRandomArrayElements(this.allProducts1, 3);
+                this.threeProductsOne2 = this.getRandomArrayElements(this.allProducts1, 3);
+                this.OneProductsOne = this.getRandomArrayElements(this.allProducts1, 1);
+                this.FourProductsOne = this.getRandomArrayElements(this.allProducts1, 4);
+            }
+        });
+        this.$axios.get('/netsc/products/bCName='+this.type2).then((res) => {
+            console.log(res.data)
+            if (res.data.result != null) {
+                this.allProducts2 = res.data.result
+                this.threeProductsTow1 = this.getRandomArrayElements(this.allProducts2, 3);
+                this.threeProductsTow2 = this.getRandomArrayElements(this.allProducts2, 3);
+                this.OneProductsTow = this.getRandomArrayElements(this.allProducts2, 1);
+                this.FourProductsTow = this.getRandomArrayElements(this.allProducts2, 4);
+            }
+        });
+        this.$axios.get('/netsc/products/bCName='+this.type3).then((res) => {
+            console.log(res.data)
+            if (res.data.result != null) {
+                this.allProducts3 = res.data.result
+                this.threeProductsThree1 = this.getRandomArrayElements(this.allProducts3, 3);
+                this.threeProductsThree2 = this.getRandomArrayElements(this.allProducts3, 3);
+                this.OneProductsThree = this.getRandomArrayElements(this.allProducts3, 1);
+                this.FourProductsThree = this.getRandomArrayElements(this.allProducts3, 4);
+            }
+        });
+        this.$axios.get('/netsc/products/bCName='+this.type4).then((res) => {
+            console.log(res.data)
+            if (res.data.result != null) {
+                this.allProducts4 = res.data.result
+                this.threeProductsFour1 = this.getRandomArrayElements(this.allProducts4, 3);
+                this.threeProductsFour2 = this.getRandomArrayElements(this.allProducts4, 3);
+                this.OneProductsFour = this.getRandomArrayElements(this.allProducts4, 1);
+                this.FourProductsFour = this.getRandomArrayElements(this.allProducts4, 4);
+            }
+        });
         /*页面挂载获取cookie，如果存在username的cookie，则跳转到主页，不需登录*/
         if(getCookie('username')){
             this.username = getCookie('username')

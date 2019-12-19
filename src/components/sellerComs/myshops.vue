@@ -175,8 +175,8 @@
 														<tr v-for="(product,index) in products" v-bind:key="product.index">
 															<td>{{index+1}}</td>
 															<td>{{product.pName}}</td>
-															<td class="text-info">{{product.pPrice}}/斤</td>
-															<td class="text-danger">{{product.pMemPrice}}/斤</td>
+															<td class="text-info">{{product.pPrice}}元/斤</td>
+															<td class="text-danger">{{product.pMemPrice}}元/斤</td>
 															<td>{{product.pState}}</td>
 															<td>{{product.bCName}}</td>
 															<td>
@@ -389,7 +389,7 @@
 															<tr v-for="(pro,index) in orderinfos" v-bind:key="pro.pId">
 																<td>{{index+1}}</td>
 																<td>{{pro.pName}}</td>
-																<td class="">{{pro.pNumber}}</td>
+																<td class="">{{pro.pNumber}}斤</td>
 																<td class="text-danger">{{pro.pPrice}}元/斤</td>
 															</tr>
 														</tbody>

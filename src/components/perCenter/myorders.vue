@@ -41,9 +41,32 @@
 											</td>
 										</tr>
 									</tbody>
-									<tfoot class="text-center">
-									</tfoot>
+                                    <tfoot class="text-center">
+                                    </tfoot>
 								</table>
+                                <div class="row mx-auto">
+                                    <ul class="pagination pagination-sm mt-2 float-right mx-auto text-primary">
+                                        <li class="page-item">
+                                            <a class="page-link" @click="switchToPage(1)"><i
+                                                class="fa fa-fast-backward">首页</i></a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" @click="switchToPage(pageNow-1)"><i
+                                                class="fa fa-backward"><</i></a>
+                                        </li>
+                                        <li class="page-item" v-for="n in pages" :class="{active:n==pageNow}">
+                                            <a @click="switchToPage(n)" class="page-link">{{n}}</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" @click="switchToPage(pageNow+1)"><i
+                                                class="fa fa-forward">></i></a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" @click="switchToPage(pages)"><i
+                                                class="fa fa-fast-forward">尾页</i></a>
+                                        </li>
+                                    </ul>
+                                </div>
 								<!-- <div id="addButton" class="text-center">
 									<button class="btn btn-danger  " data-toggle="modal" data-target="#addModal" @click="">添加店铺</button>
 								</div> -->
@@ -153,7 +176,7 @@
 															<tr v-for="(pro,index) in orderinfos" v-bind:key="pro.pId">
 																<td>{{index+1}}</td>
 																<td>{{pro.pName}}</td>
-																<td class="">{{pro.pNumber}}</td>
+																<td class="">{{pro.pNumber}}斤</td>
 																<td class="text-danger">{{pro.pPrice}}元/斤</td>
 															</tr>
 														</tbody>
@@ -180,6 +203,9 @@
 											<button ref="payRightNowButton" type="button" class="btn btn-danger border mt-5 mr-5" @click="pay" data-dismiss="modal" v-if="payButtonShow">
 												立即付款
 											</button>
+                                            <button ref="payRightNowButton" type="button" class="btn btn-danger border mt-5 mr-5" @click="deletePreOrder" data-dismiss="modal" v-if="payButtonShow">
+                                                删除订单
+                                            </button>
 											<button ref="checkGetGoodsButton" type="button" class="btn btn-danger border mt-5 mr-5" @click="checkGetGoods" data-dismiss="modal" v-if="getGoodsButtonShow">
 												确认收货
 											</button>
@@ -371,7 +397,11 @@
 					getGoodsButtonShow:false,
 					myCommentButtonShow:false,
 					payShow:false,
-					paymoneyShow:false
+					paymoneyShow:false,
+                    pageSize:10,
+                    totalPages:0,
+                    pages:0,
+                    pageNow:1
 				}
 			},
 			components: {
@@ -382,13 +412,13 @@
 				this.userId=getCookie('id');
 				this.roleId = getCookie('roleId');
 				console.log(this.userId);
-				this.$axios.get('/netsc/order/uid='+this.userId).then((res)=>{
-					console.log(res.data);
-					if (res.data.result != null) {
-						this.myorders = res.data.result;
-						console.log(this.myorders)
-					}
-				})
+                this.$axios.get('/netsc/ordersPage?page='+ this.pageNow + '&pageSize=' + this.pageSize+"&uId="+this.userId).then((res) => {
+                    console.log(res.data);
+                    this.myorders = res.data.result.rows;
+                    this.totalPages = res.data.result.total;
+                    this.pages = res.data.result.pages;
+                    this.pageNow = res.data.result.current;
+                })
 			},
 			methods:{
 				detInfoMation(orderinfo){
@@ -415,7 +445,11 @@
 						this.payButtonShow = true;
 						this.getGoodsButtonShow = false;
 						this.myCommentButtonShow = false;
-					}else if(orderinfo.oState === "已发货"){
+					}else if(orderinfo.oState === "已付款"){
+                        this.payButtonShow = false;
+                        this.getGoodsButtonShow = false;
+                        this.myCommentButtonShow = false;
+                    }else if(orderinfo.oState === "已发货"){
 						this.payButtonShow = false;
 						this.getGoodsButtonShow = true;
 						this.myCommentButtonShow = false;
@@ -507,7 +541,44 @@
 					}else{
 						alert("欢迎随时对本次购物做出评价！")
 					}
-				}
+				},
+                switchToPage(pageNo) {
+                    // console.log(this.pageNow)
+                    if (pageNo <= 0) {
+                        pageNo = 1;
+                    } else if (pageNo > this.pages) {
+                        pageNo = this.pages;
+                    }
+                    this.getOrdersByPage(pageNo);
+                },
+                getOrdersByPage(pageNow) {
+                    // console.log("调用分页！");
+                    this.$axios.get('/netsc/ordersPage?page=' + pageNow + '&pageSize='+ this.pageSize+"&uId="+this.userId).then((res) => {
+                        // console.log(res.data);
+                        this.myorders = res.data.result.rows;
+                        this.totalPages = res.data.result.total;
+                        this.pages = res.data.result.pages;
+                        this.pageNow = res.data.result.current;
+                    })
+                },
+                deletePreOrder(){
+                    var r = confirm("亲，您确定取消该订单吗？")
+                    if (r === true) {
+                        this.$axios.delete('/netsc/orderinfo/orderId='+this.orderId).then((res) => {
+                            // console.log(res.data);
+                            this.$axios.delete('/netsc/order/'+this.orderId).then((res) => {
+                                this.$axios.get('/netsc/ordersPage?page=' + this.pageNow + '&pageSize='+ this.pageSize+"&uId="+this.userId).then((res) => {
+                                    // console.log(res.data);
+                                    this.myorders = res.data.result.rows;
+                                    this.totalPages = res.data.result.total;
+                                    this.pages = res.data.result.pages;
+                                    this.pageNow = res.data.result.current;
+                                    alert("删除成功！")
+                                })
+                            })
+                        })
+                    }
+                }
 			},
 			watch: { //深度 watcher
 				payPassword: {
@@ -520,7 +591,6 @@
 					deep: true
 				}
 			}
-
 		}
 	</script>
 	
